@@ -20,6 +20,7 @@ var Config = middleware.LoggerConfig{
 	"bytes_in":${bytes_in},
 	"bytes_out":${bytes_out},
 	"user_agent":"${user_agent}"
+	"request_id":"${header:x-request-id}"
 }` + "\n",
 	CustomTimeFormat: "2006-01-02 15:04:05.00000",
 }
