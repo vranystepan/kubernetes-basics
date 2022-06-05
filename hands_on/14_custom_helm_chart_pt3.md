@@ -32,6 +32,10 @@
 
 3. perform upgrade of the release and watch what's happening
 
+    <details>
+    <summary>Click to expand!</summary>
+
     ```bash
     helm upgrade --install training-app . --values values-dev.yaml
     ```
+    </details>
