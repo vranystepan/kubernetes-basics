@@ -42,21 +42,25 @@ other controllers.
 
 3. list ingress objects in your namespace
 
+    <details>
+    <summary>Click to expand!</summary>
+
     ```bash
     kubectl get ing
     kubectl describe ing app
     ```
+    </details>
 
 4. try to reach your app directly from your workstation, please replace `<your namespace>` with the actual name of your namespace.
 
     ```bash
-    curl https://<your namespace>.s01.training.eks.rocks -H 'User-Agent: workstation'
+    curl https://<your namespace>.s01.training.eks.rocks
     ```
 
     or
 
     ```powershell
-    Invoke-WebRequest -Headers @{"User-Agent" = "workstation"} https://<your namespace>.s01.training.eks.rocks
+    Invoke-WebRequest https://<your namespace>.s01.training.eks.rocks
     ```
 
 5. add following annotation to the ingress object and send a new request to the service
