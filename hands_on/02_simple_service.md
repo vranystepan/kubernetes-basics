@@ -27,17 +27,21 @@ They help with load balancing and they also take care of service discovery.
     > specified in the previous section! This is how
     > Kubernetes know where route traffice to.
 
-3. get ip addresses of the pods
+3. get ip addresses of the pods, this can be done by adding output modifier to `get` command
 
     ```bash
-    kubectl get pods -o custom-columns=NAME:metadata.name,IP:status.podIP
+    -o custom-columns=NAME:metadata.name,IP:status.podIP
     ```
 
-4. and now list the endpoints created by this service
+4. and now list the `endpoints` created by this service
+
+    <details>
+    <summary>Click to expand!</summary>
 
     ```bash
     kubectl get endpoints
     ```
+    </details>
 
     > Please note that endpoint contains pods' IP addresses
     > listed in the previous step
@@ -57,35 +61,38 @@ They help with load balancing and they also take care of service discovery.
 
 6. open a new shell in this pod
 
+    <details>
+    <summary>Click to expand!</summary>
+
     ```bash
     kubectl exec -it cli -- bash
     ```
 
     > If you need more details about Kubectl exec, please check
     > following article https://itnext.io/how-it-works-kubectl-exec-e31325daa910
+    </details>
 
 7. and try to reach `app` service from there
 
     ```bash
-    curl http://app -H 'User-Agent: direct-call-from-pod'
+    curl http://app
     ```
 
 8. you can try even different hostname
 
     ```bash
-    curl http://app.<your namespace> -H 'User-Agent: direct-call-from-pod'
-    ```
+    curl http://app.<your namespace>
 
 9. or
 
     ```bash
-    curl http://app.<your namespace>.svc -H 'User-Agent: direct-call-from-pod'
+    curl http://app.<your namespace>.svc
     ```
 
 10. or
 
     ```bash
-    curl http://app.<your namespace>.svc.cluster.local -H 'User-Agent: direct-call-from-pod'
+    curl http://app.<your namespace>.svc.cluster.local
     ```
 
     > this is what we call service discovery. You can use
@@ -94,7 +101,10 @@ They help with load balancing and they also take care of service discovery.
     > even between namespaces (unless restricted with some more
     > advance networking tools)
 
-11. if you want to see what's running there, you can simply forward container's port to your localhost
+11. if you want to see what's running there, you can simply forward service's port to your localhost, use the same forward command but replace `deployment` with `svc` or `service` and specify the respective port
+
+    <details>
+    <summary>Click to expand!</summary>
 
     ```bash
     kubectl port-forward svc/app 8080:80
@@ -102,6 +112,7 @@ They help with load balancing and they also take care of service discovery.
 
     > please not the log messages, you have requested service
     > but it's forwarding to the pod. 
+    </details>
 
     and from the different shell:
 

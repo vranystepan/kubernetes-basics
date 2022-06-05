@@ -61,11 +61,14 @@ how to work with this object.
 
 7. replicaset (managed by the Deployment) keeps pods in the desired count
 
-8. if you want to see what's running there, you can simply forward container's port to your localhost
+8. if you want to see what's running there, you can simply forward container's port to your localhost.
 
     ```bash
     kubectl port-forward deploy/app 8080:8080
     ```
+
+    > Alternatively you can just list all the pods and
+    > use the pod's name as the first parameter.
 
     and from the different shell:
 
@@ -85,25 +88,6 @@ how to work with this object.
 9. now let's try to add some init container. This init container will download some assets to the shared emptyDir volume. The same empty dir is shared with the application container.
 
     ```yaml
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: app
-      labels:
-        app: app
-    spec:
-      replicas: 3
-      selector:
-        matchLabels:
-          app: app
-      template:
-        metadata:
-          labels:
-            app: app
-        spec:
-          volumes:
-            - name: assets
-              emptyDir: {}
           initContainers:
             - name: download-assets
               image: 314595822951.dkr.ecr.eu-west-1.amazonaws.com/training/application:working
@@ -113,73 +97,46 @@ how to work with this object.
                 - |
                   curl -Lo /assets/kubectl https://dl.k8s.io/release/v1.24.0/bin/linux/amd64/kubectl
                   chmod +x /assets/kubectl
-              volumeMounts:
-                - name: assets
-                  mountPath: /assets
-          containers:
-            - name: app
-              image: 314595822951.dkr.ecr.eu-west-1.amazonaws.com/training/application:working
-              ports:
-                - containerPort: 8080
+    ```
+
+    to make this work, we also need a volume
+
+    ```yaml
+          volumes:
+            - name: assets
+              emptyDir: {}
+    ```
+
+    and we also need to mount it to both containers
+
+    ```yaml
               volumeMounts:
                 - name: assets
                   mountPath: /assets
     ```
 
 10. open a new shell
+    <details>
+    <summary>Click to expand!</summary>
 
     ```bash
     kubectl exec -it deploy/app -- bash
     ```
+    </details>
 
 11. check if the assets is really there
+
+    <details>
+    <summary>Click to expand!</summary>
 
     ```bash
     ls /assets
     ```
+    </details>
 
-12. now let's also try some simple sidecat. This sidecar simulates some more complicated proxy like service mesh container. 
+12. now let's also try some simple sidecar. This sidecar simulates some more complicated proxy like service mesh container. 
 
     ```yaml
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: app
-      labels:
-        app: app
-    spec:
-      replicas: 3
-      selector:
-        matchLabels:
-          app: app
-      template:
-        metadata:
-          labels:
-            app: app
-        spec:
-          volumes:
-            - name: assets
-              emptyDir: {}
-          initContainers:
-            - name: download-assets
-              image: 314595822951.dkr.ecr.eu-west-1.amazonaws.com/training/application:working
-              command:
-                - sh
-                - -c
-                - |
-                  curl -Lo /assets/kubectl https://dl.k8s.io/release/v1.24.0/bin/linux/amd64/kubectl
-                  chmod +x /assets/kubectl
-              volumeMounts:
-                - name: assets
-                  mountPath: /assets
-          containers:
-            - name: app
-              image: 314595822951.dkr.ecr.eu-west-1.amazonaws.com/training/application:working
-              ports:
-                - containerPort: 8080
-              volumeMounts:
-                - name: assets
-                  mountPath: /assets
             - name: proxy
               image: alpine/socat
               args:
@@ -191,11 +148,18 @@ how to work with this object.
 
 13. check if all pods are running and forward your local port `8081` to pod's port `8081`
 
+    <details>
+    <summary>Click to expand!</summary>
+
     ```bash
     kubectl port-forward deploy/app 8081:8081
     ```
+    </details>
 
     and verify if you receive something
+
+    <details>
+    <summary>Click to expand!</summary>
 
     ```bash
     curl localhost:8081
@@ -206,6 +170,7 @@ how to work with this object.
     ```powershell
     Invoke-WebRequest http://localhost:8081
     ```
+    </details>
 
 14. leave the Deployment running, we're gonna need it soon
 
