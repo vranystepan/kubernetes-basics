@@ -36,7 +36,7 @@
       labels:
         app: app
     spec:
-      replicas: 3
+      replicas: 2
       selector:
         matchLabels:
           app: app
@@ -54,80 +54,57 @@
 
 6. perform a quick check of your chart with `helm template` command
 
+    <details>
+    <summary>Click to expand!</summary>
+
     ```bash
     helm template training-app .
     ```
+    </details>
 
 7. let's parametrize the image name, change `templates/deployment.yaml` to this
 
     ```yaml
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: app
-      labels:
-        app: app
-    spec:
-      replicas: 3
-      selector:
-        matchLabels:
-          app: app
-      template:
-        metadata:
-          labels:
-            app: app
-        spec:
-          containers:
-            - name: app
               image: {{ .Values.image }}
-              ports:
-                - containerPort: 8080
     ```
 
-8. and create a new file `values.yaml` with following contents
+8. and create a new file `values.yaml` with the respective value
+
+    <details>
+    <summary>Click to expand!</summary>
 
     ```yaml
     image: 314595822951.dkr.ecr.eu-west-1.amazonaws.com/training/application:working
     ```
+    </details>
 
 9. perhaps we can make the parametrization more granular, change `templates/deployment.yaml` to this
 
     ```yaml
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: app
-      labels:
-        app: app
-    spec:
-      replicas: 3
-      selector:
-        matchLabels:
-          app: app
-      template:
-        metadata:
-          labels:
-            app: app
-        spec:
-          containers:
-            - name: app
               image: {{ .Values.image.name }}:{{ .Values.image.tag }}
-              ports:
-                - containerPort: 8080
+    ```
   
 11. and update `values.yaml` accordingly
+
+    <details>
+    <summary>Click to expand!</summary>
 
     ```yaml
     image:
       name: 314595822951.dkr.ecr.eu-west-1.amazonaws.com/training/application
       tag: working
     ```
+    </details>
 
 12. check the rendered resources with `helm template` command again
+
+    <details>
+    <summary>Click to expand!</summary>
 
     ```bash
     helm template training-app .
     ```
+    </details>
 
     > please note that we don't need to specify `--values` flag,
     > since this `values.yaml` file is located directly in the chart
@@ -135,39 +112,24 @@
 
 13. let's install this helm chart to the Kubernetes
 
+    <details>
+    <summary>Click to expand!</summary>
+
     ```bash
     helm upgrade --install training-app .
     ```
+    </details>
 
-14. darn, it did not work. Let's parametrize names a bit
-
-    `templates/deployment.yaml`:
+14. Let's parametrize names a bit in `templates/deployment.yaml`, try to use it in all properties using this name.
 
     ```yaml
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: {{ .Values.name }}
-      labels:
         app: {{ .Values.name }}
-    spec:
-      replicas: 3
-      selector:
-        matchLabels:
-          app: {{ .Values.name }}
-      template:
-        metadata:
-          labels:
-            app: {{ .Values.name }}
-        spec:
-          containers:
-            - name: app
-              image: {{ .Values.image.name }}:{{ .Values.image.tag }}
-              ports:
-                - containerPort: 8080
     ```
 
-    `values.yaml`:
+    and add name to the `values.yaml`.
+
+    <details>
+    <summary>Click to expand!</summary>
 
     ```yaml
     name: training-app
@@ -175,10 +137,15 @@
       name: 314595822951.dkr.ecr.eu-west-1.amazonaws.com/training/application
       tag: working 
     ```
+    </details>
 
 15. and try to install this chart again
+
+    <details>
+    <summary>Click to expand!</summary>
 
     ```bash
     helm upgrade --install training-app .
     ```
+    </details>
 
