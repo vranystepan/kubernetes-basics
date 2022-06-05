@@ -38,6 +38,8 @@ of self-managed services. It just works.
               restartPolicy: OnFailure
     ```
 
+    > Please note the `.spec.jobTemplate.spec.template`. I'm repeating myself here but here we go: it's a pod.
+
 3. wait a few seconds and list spawned jobs
 
     <details>

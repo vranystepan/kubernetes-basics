@@ -40,6 +40,8 @@ other controllers.
                   number: 80
     ```
 
+    > Please note the backend configuration. This is the upstream service we're gonna route traffic to.
+
 3. list ingress objects in your namespace
 
     <details>

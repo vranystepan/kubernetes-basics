@@ -33,6 +33,8 @@ They help with load balancing and they also take care of service discovery.
     -o custom-columns=NAME:metadata.name,IP:status.podIP
     ```
 
+    > Plese note that each pod has its own IP adddress. This is general requirement for Kubernetes networking, pods need to be addresable by unique IP addresses.
+
 4. and now list the `endpoints` created by this service
 
     <details>
@@ -110,7 +112,7 @@ They help with load balancing and they also take care of service discovery.
     kubectl port-forward svc/app 8080:80
     ```
 
-    > please not the log messages, you have requested service
+    > please note the log messages, you have requested service
     > but it's forwarding to the pod. 
     </details>
 

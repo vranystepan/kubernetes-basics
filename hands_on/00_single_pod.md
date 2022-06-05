@@ -50,6 +50,8 @@ soon.
     kubectl describe pod app
     ```
 
+    > try to experiment with `get` and `describe` commands a bit, you can use these commands to interact with any object and get some interesting information. Some objects are regularly updated by their controllers so you can even fetch some very relevant lifecycle information. For instance, try to get node resource and then describe one of them.
+
 6. open a new shell in this pod
 
     ```bash
@@ -58,9 +60,13 @@ soon.
 
 7. now try to edit some parameters of this pod
 
+    > Following command will open a text editor. In Windows it's gonna be notepad, in Mac OS or Linux it's gonna be editor configured by EDITOR environment variable.
+
     ```bash
     kubectl edit pod app
     ```
+
+    > Once again, you can edit any resource you want. But you should not do it in the production environment. Try to rather keep the truth in the git repository. Always.
 
 8. yeah, it does not work!
 
