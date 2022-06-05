@@ -30,11 +30,15 @@
 
 3. check the status of all pods
 
+    <details>
+    <summary>Click to expand!</summary>
+
     ```bash
     kubectl get pods
     kubectl logs <name of the new pod>
     kubectl describe pod <name of the new pod>
     ```
+    </details>
 
     > Please note that at least one pod is still running,
     > this is called RollingUpdate and this is the way
@@ -42,47 +46,38 @@
 
 4. try to send some requests to your service
 
-    ```bash
-    curl https://<your namespace>.s01.training.eks.rocks -H 'User-Agent: workstation'
-    ```
+    <details>
+    <summary>Click to expand!</summary>
 
-    and check how the endpoints lokk
+    ```bash
+    curl https://<your namespace>.s01.training.eks.rocks
+    ```
+    </details>
+
+    and check how the `endpoints` look
+
+    <details>
+    <summary>Click to expand!</summary>
 
     ```bash
     kubectl get endpoints
     ```
+    </details>
 
 5. now we're gonna deploy slowly starting service. This simulates some startup tasks that sometimes happen in applications.  Create a local file with the following contents:
 
     ```yaml
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: app
-      labels:
-        app: app
-    spec:
-      replicas: 3
-      selector:
-        matchLabels:
-          app: app
-      template:
-        metadata:
-          labels:
-            app: app
-        spec:
-          containers:
-            - name: app
               image: 314595822951.dkr.ecr.eu-west-1.amazonaws.com/training/application:sleeping
-              ports:
-                - containerPort: 8080
     ```
 
 
 4. try to send some requests to your service
 
+    <details>
+    <summary>Click to expand!</summary>
+
     ```bash
-    curl https://<your namespace>.s01.training.eks.rocks -H 'User-Agent: workstation'
+    curl https://<your namespace>.s01.training.eks.rocks
     ```
 
     or
@@ -90,5 +85,6 @@
     ```powershell
     Invoke-WebRequest https://<your namespace>.s01.training.eks.rocks
     ```
+    </details>
 
-    ... we just caused a production outage.
+    ... we just caused a production outage 😱
