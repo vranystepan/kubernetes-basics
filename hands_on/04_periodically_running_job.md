@@ -40,15 +40,23 @@ of self-managed services. It just works.
 
 3. wait a few seconds and list spawned jobs
 
+    <details>
+    <summary>Click to expand!</summary>
+
     ```bash
     kubectl get job
     ```
+    </details>
 
 4. also, check the pods spawned by these jobs
+
+    <details>
+    <summary>Click to expand!</summary>
 
     ```bash
     kubectl get pods
     ```
+    </details>
 
 5. and try to manually submit a new job with the cronjob's configuration
 
@@ -56,15 +64,27 @@ of self-managed services. It just works.
     kubectl create job --from=cronjob/cronjob cronjob-manual-01
     ```
 
+    > Why would you need this? Sometimes it might happen that
+    > Application was broken during the given schedule and you
+    > simply want to run it right away.
+
 6. and once again, check the generated resources
+
+    <details>
+    <summary>Click to expand!</summary>
 
     ```bash
     kubectl get jobs
     kubectl get pods
     ```
+    </details>
 
 7. delete the cronjob
+
+    <details>
+    <summary>Click to expand!</summary>
 
     ```bash
     kubectl delete cj cronjob
     ```
+    </details>
