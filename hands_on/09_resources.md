@@ -2,30 +2,9 @@
 
 1. make sure you're in the correct namespace [link](./00_single_pod.md)
 
-2. create following resource
+2. update your deployment with following configuration, this configuration belongs to the container's specification.
 
     ```yaml
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: app
-      labels:
-        app: app
-    spec:
-      replicas: 1
-      selector:
-        matchLabels:
-          app: app
-      template:
-        metadata:
-          labels:
-            app: app
-        spec:
-          containers:
-            - name: app
-              image: 314595822951.dkr.ecr.eu-west-1.amazonaws.com/training/application:working
-              ports:
-                - containerPort: 8080
               resources:
                 requests:
                   cpu: 10000m
@@ -37,42 +16,29 @@
 
 3. list all pods in your namespace
 
+    <details>
+    <summary>Click to expand!</summary>
+
     ```bash
     kubectl get pods
     ```
+    </details>
 
     this is what happens when you don't have enought resources available.
 
-    Try to describe on of the pods
+    Try to describe one of the pods and get more details
+
+    <details>
+    <summary>Click to expand!</summary>
 
     ```bash
     kubectl describe pod <pod name>
     ```
+    </details>
 
 4. now, let's do some more realistic scenario, update deployment as follows
 
     ```yaml
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      name: app
-      labels:
-        app: app
-    spec:
-      replicas: 1
-      selector:
-        matchLabels:
-          app: app
-      template:
-        metadata:
-          labels:
-            app: app
-        spec:
-          containers:
-            - name: app
-              image: 314595822951.dkr.ecr.eu-west-1.amazonaws.com/training/application:working
-              ports:
-                - containerPort: 8080
               resources:
                 requests:
                   cpu: 100m
@@ -81,13 +47,6 @@
                   cpu: 100m
                   memory: 128Mi
     ```
-
-    > Please not the volume section, this deployment has a special
-    > ephemerail storage that is count towards the memory limits.
-    > In the following step we'll try to fill this limit up.
-
-    > In your environment, you can simulate this with your Java
-    > applications :D
 
 5. now, try to fill these 100MiB and check the usage
 
@@ -101,7 +60,7 @@
     Invoke-WebRequest -Headers https://<your namespace>.s01.training.eks.rocks/fill
     ```
 
-    and then
+    and then list the resources used by your application
 
     ```bash
     kubectl top pods
