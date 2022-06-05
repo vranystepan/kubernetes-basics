@@ -19,7 +19,7 @@ how to work with this object.
       labels:
         app: app
     spec:
-      replicas: 3
+      replicas: 2
       selector:
         matchLabels:
           app: app
