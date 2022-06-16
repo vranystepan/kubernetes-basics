@@ -2,7 +2,7 @@
 
 1. edit your AWS config file:
 
-  - in Mac OS and Windows it's `~/.aws`
+  - in Mac OS and Windows it's `~/.aws/config`
   - In Windows it's `%UserProfile%\.aws\config`
 
 2. add following contents to this file
