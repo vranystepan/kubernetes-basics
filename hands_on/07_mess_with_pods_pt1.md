@@ -23,7 +23,7 @@
         spec:
           containers:
             - name: app
-              image: 314595822951.dkr.ecr.eu-west-1.amazonaws.com/training/application:breaking
+              image: docker.io/vranystepan/workshop-app:breaking
               ports:
                 - containerPort: 8080
     ```
@@ -67,7 +67,7 @@
 5. now we're gonna deploy slowly starting service. This simulates some startup tasks that sometimes happen in applications.  Create a local file with the following contents:
 
     ```yaml
-              image: 314595822951.dkr.ecr.eu-west-1.amazonaws.com/training/application:sleeping
+              image: docker.io/vranystepan/workshop-app:sleeping
     ```
 
 

@@ -1,8 +1,7 @@
 #!/bin/sh
 
-AWS_ACCOUNT_ID="$(aws sts get-caller-identity | jq -r '.Account')"
-CONTAINER_REPOSITORY="${AWS_ACCOUNT_ID}.dkr.ecr.eu-west-1.amazonaws.com"
-CONTAINER_IMAGE="${CONTAINER_REPOSITORY}/training/application"
+CONTAINER_REPOSITORY="docker.io"
+CONTAINER_IMAGE="${CONTAINER_REPOSITORY}/vranystepan/workshop-app"
 
 # build the first variant
 docker build \

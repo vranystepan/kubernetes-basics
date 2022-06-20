@@ -38,7 +38,7 @@
     ```yaml
     name: training-app
     image:
-      name: 314595822951.dkr.ecr.eu-west-1.amazonaws.com/training/application
+      name: docker.io/vranystepan/workshop-app
       tag: working
     config: {}
     ```

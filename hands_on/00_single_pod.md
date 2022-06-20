@@ -33,7 +33,7 @@ soon.
     spec:
       containers:
         - name: app
-          image: 314595822951.dkr.ecr.eu-west-1.amazonaws.com/training/application:working
+          image: docker.io/vranystepan/workshop-app:working
           ports:
             - containerPort: 8080
     ```

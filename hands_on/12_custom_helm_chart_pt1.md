@@ -47,7 +47,7 @@
         spec:
           containers:
             - name: app
-              image: 314595822951.dkr.ecr.eu-west-1.amazonaws.com/training/application:working
+              image: docker.io/vranystepan/workshop-app:working
               ports:
                 - containerPort: 8080
     ```
@@ -74,7 +74,7 @@
     <summary>Click to expand!</summary>
 
     ```yaml
-    image: 314595822951.dkr.ecr.eu-west-1.amazonaws.com/training/application:working
+    image: docker.io/vranystepan/workshop-app:working
     ```
     </details>
 
@@ -91,7 +91,7 @@
 
     ```yaml
     image:
-      name: 314595822951.dkr.ecr.eu-west-1.amazonaws.com/training/application
+      name: docker.io/vranystepan/workshop-app
       tag: working
     ```
     </details>
@@ -134,7 +134,7 @@
     ```yaml
     name: training-app
     image:
-      name: 314595822951.dkr.ecr.eu-west-1.amazonaws.com/training/application
+      name: docker.io/vranystepan/workshop-app
       tag: working 
     ```
     </details>

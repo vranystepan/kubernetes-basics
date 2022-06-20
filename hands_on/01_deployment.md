@@ -30,7 +30,7 @@ how to work with this object.
         spec:
           containers:
             - name: app
-              image: 314595822951.dkr.ecr.eu-west-1.amazonaws.com/training/application:working
+              image: docker.io/vranystepan/workshop-app:working
               ports:
                 - containerPort: 8080
     ```
@@ -95,7 +95,7 @@ how to work with this object.
     ```yaml
           initContainers:
             - name: download-assets
-              image: 314595822951.dkr.ecr.eu-west-1.amazonaws.com/training/application:working
+              image: docker.io/vranystepan/workshop-app:working
               cmd:
                 - sh
                 - -c
